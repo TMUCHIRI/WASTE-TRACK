@@ -1,0 +1,66 @@
+  ###REGISTER USER
+POST http://localhost:5800/users/register
+Content-Type: application/json
+
+{
+    "username": "USER",
+    "email": "user@example.com",
+    "password": "user1"
+}
+
+###LOGIN USER
+POST http://localhost:5800/users/login
+Content-Type: application/json
+
+{
+    "email": "user@example.com",
+    "password": "1234567"
+}
+
+###FETCH ALL USERS AND MANAGERS
+GET http://localhost:5800/users/fetch-all-users
+Content-Type: application/json
+
+
+### FETCH SINGLE USER
+GET http://localhost:5800/users/cf2be7dd-4549-40ba-a1af-342c85d0698d
+Content-Type: application/json
+
+
+### FETCH USER BY ROLE(USER)
+GET http://localhost:5800/users/fetchRole-users
+Content-Type: application/json
+
+
+###UPDATE USER PASSWORD
+PUT http://localhost:5800/users/admintim@example.com
+Content-Type: application/json
+
+{
+  "password": "1234567"
+}
+
+
+###SWITCH TO MANAGER ROLE
+PUT http://localhost:5800/users/switchManagerRole/cf2be7dd-4549-40ba-a1af-342c85d0698d
+Content-Type: application/json
+
+
+###SWITCH TO ADMIN ROLE
+PUT http://localhost:5800/users/switchAdminRole/7d02a16b-70fd-417d-828d-4a6701dde7e7
+Content-Type: application/json
+
+
+###REVOKE PRIVILEGES FROM MANAGER AND ADMIN ROLE TO USERS
+PUT http://localhost:5800/users/revokePrivileges/7d02a16b-70fd-417d-828d-4a6701dde7e7
+Content-Type: application/json
+
+
+###DEACTIVATE USER
+PUT http://localhost:5800/users/deactivateUser/7d02a16b-70fd-417d-828d-4a6701dde7e7
+Content-Type: application/json
+
+
+###ACTIVATE USER
+PUT http://localhost:5800/users/activateUser/7d02a16b-70fd-417d-828d-4a6701dde7e7
+Content-Type: application/json
