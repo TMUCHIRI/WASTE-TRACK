@@ -1,0 +1,75 @@
+<div class="cont" [class.s--signup]="isSignUp">
+  <!-- Sign In Form -->
+  <div class="form sign-in">
+    <h2>Welcome Back!</h2>
+    <form #loginForm="ngForm" (ngSubmit)="onLoginSubmit(loginForm)">
+      <label>
+        <span>Email</span>
+        <input type="email" name="email" ngModel required email #email="ngModel" />
+      </label>
+      <div *ngIf="email.invalid && (email.dirty || email.touched)" class="validation-error">
+        <div *ngIf="email.errors?.['required']">Email is required.</div>
+        <div *ngIf="email.errors?.['email']">Please enter a valid email.</div>
+      </div>
+
+      <label>
+        <span>Password</span>
+        <input type="password" name="password" ngModel required #password="ngModel" />
+      </label>
+      <div *ngIf="password.invalid && (password.dirty || password.touched)" class="validation-error">
+        <div *ngIf="password.errors?.['required']">Password is required.</div>
+      </div>
+
+      <p class="forgot-pass">Forgot password?</p>
+      <button type="submit" class="submit" [disabled]="loginForm.invalid">Sign In</button>
+    </form>
+  </div>
+
+  <!-- Sign Up Form -->
+  <div class="sub-cont">
+    <div class="img">
+      <div class="img__text m--up">
+        <h3>Don't have an account? Please Sign up!</h3>
+      </div>
+      <div class="img__text m--in">
+        <h3>If you already have an account, just sign in.</h3>
+      </div>
+      <div class="img__btn" (click)="toggleForm()">
+        <span class="m--up">Sign Up</span>
+        <span class="m--in">Sign In</span>
+      </div>
+    </div>
+    <div class="form sign-up">
+      <h2>Create your Account</h2>
+      <form #registerForm="ngForm" (ngSubmit)="onRegisterSubmit(registerForm)">
+        <label>
+          <span>Name</span>
+          <input type="text" name="name" ngModel required #name="ngModel" />
+        </label>
+        <div *ngIf="name.invalid && (name.dirty || name.touched)" class="validation-error">
+          <div *ngIf="name.errors?.['required']">Name is required.</div>
+        </div>
+
+        <label>
+          <span>Email</span>
+          <input type="email" name="email" ngModel required email #regEmail="ngModel" />
+        </label>
+        <div *ngIf="regEmail.invalid && (regEmail.dirty || regEmail.touched)" class="validation-error">
+          <div *ngIf="regEmail.errors?.['required']">Email is required.</div>
+          <div *ngIf="regEmail.errors?.['email']">Please enter a valid email.</div>
+        </div>
+
+        <label>
+          <span>Password</span>
+          <input type="password" name="password" ngModel required minlength="6" #regPassword="ngModel" />
+        </label>
+        <div *ngIf="regPassword.invalid && (regPassword.dirty || regPassword.touched)" class="validation-error">
+          <div *ngIf="regPassword.errors?.['required']">Password is required.</div>
+          <div *ngIf="regPassword.errors?.['minlength']">Password must be at least 6 characters.</div>
+        </div>
+
+        <button type="submit" class="submit" [disabled]="registerForm.invalid">Sign Up</button>
+      </form>
+    </div>
+  </div>
+</div>

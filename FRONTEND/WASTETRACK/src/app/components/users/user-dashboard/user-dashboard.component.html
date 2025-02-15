@@ -1,0 +1,93 @@
+<div class="main">
+  <div class="top">
+    <div class="header">
+      <div class="header-text">
+        <h1>USER DASHBOARD</h1>
+      </div>
+      <div class="schedule-btn">
+        <button (click)="openForm()">Schedule a Pickup</button>
+      </div>
+    </div>
+    <div class="welcome-text">
+      <h3>WELCOME USER</h3>
+    </div>
+  </div>
+
+  <div class="body">
+    <div class="table-header">
+      <h2>Recent Pickups</h2>
+    </div>
+    <div class="table">
+      <table>
+        <thead>
+          <tr>
+            <th>Pickup ID</th>
+            <th>Pickup Date</th>
+            <th>Collector</th>
+            <th>Category</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Table rows will be dynamically added here -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Form Modal -->
+  <div class="form-modal" *ngIf="isFormOpen">
+    <div class="form-content">
+      <span class="close-btn" (click)="closeForm()">&times;</span>
+      <h2>Request Pickup</h2>
+      <form #pickupForm="ngForm" (ngSubmit)="onSubmit(pickupForm)">
+        <!-- Date Field -->
+        <div class="form-group">
+          <label for="date">Pickup Date</label>
+          <input type="date" id="date" name="date" ngModel required #date="ngModel">
+          <div *ngIf="date.invalid && (date.dirty || date.touched)" class="validation-error">
+            <div *ngIf="date.errors?.['required']">Pickup date is required.</div>
+          </div>
+        </div>
+
+        <!-- Location Field -->
+        <div class="form-group">
+          <label for="location">Location</label>
+          <input type="text" id="location" name="location" ngModel required #location="ngModel">
+          <div *ngIf="location.invalid && (location.dirty || location.touched)" class="validation-error">
+            <div *ngIf="location.errors?.['required']">Location is required.</div>
+          </div>
+        </div>
+
+        <!-- Phone Number Field -->
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" name="phone" ngModel required pattern="[0-9]{10}" #phone="ngModel">
+          <div *ngIf="phone.invalid && (phone.dirty || phone.touched)" class="validation-error">
+            <div *ngIf="phone.errors?.['required']">Phone number is required.</div>
+            <div *ngIf="phone.errors?.['pattern']">Phone number must be 10 digits.</div>
+          </div>
+        </div>
+
+        <!-- Category Field -->
+        <div class="form-group">
+          <label for="category">Category</label>
+          <select id="category" name="category" ngModel required #category="ngModel">
+            <option value="" disabled selected>Select a category</option>
+            <option value="garbage">Garbage Collection</option>
+            <option value="recyclable">Recyclable Products</option>
+            <option value="sanitary">Sanitary Disposal</option>
+          </select>
+          <div *ngIf="category.invalid && (category.dirty || category.touched)" class="validation-error">
+            <div *ngIf="category.errors?.['required']">Category is required.</div>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="form-group">
+          <button type="submit" [disabled]="pickupForm.invalid">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

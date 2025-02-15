@@ -1,0 +1,60 @@
+<div class="sidebar" [class.active]="isActive">
+    <div class="logo_content">
+      <div class="logo">
+        <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
+        <div class="logo_name">WASTETRACK</div>
+      </div>
+      <i class="fa fa-sliders" aria-hidden="true" (click)="toggleSidebar()"></i>
+    </div>
+    <div class="nav_list">
+      <ul>
+        <!-- Dashboard -->
+        <li>
+          <a routerLink="collector-dashboard">
+            <i class="fa fa-home" aria-hidden="true"></i>
+            <span class="links_name">Dashboard</span>
+          </a>
+          <span class="tooltip">Dashboard</span>
+        </li>
+  
+        <!-- Pending Requests -->
+        <li>
+          <a routerLink="collector-requests">
+            <i class="fa fa-clock" aria-hidden="true"></i>
+            <span class="links_name">Requests</span>
+          </a>
+          <span class="tooltip">Requests</span>
+        </li>
+  
+        <!-- Request History -->
+        <li>
+          <a routerLink="collector-history">
+            <i class="fa fa-history" aria-hidden="true"></i>
+            <span class="links_name">History</span>
+          </a>
+          <span class="tooltip">History</span>
+        </li>
+  
+        <!-- Profile -->
+        <li>
+          <a routerLink="collector-profile">
+            <i class="fa fa-user" aria-hidden="true"></i>
+            <span class="links_name">Profile</span>
+          </a>
+          <span class="tooltip">Profile</span>
+        </li>
+  
+        <!-- Log Out -->
+        <li>
+          <a (click)="logout()" class="bottom">
+            <i class="fa fa-sign-out" aria-hidden="true"></i>
+            <span class="links_name">Log out</span>
+          </a>
+          <span class="tooltip">Log Out</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="home_content">
+    <div class="text"></div>
+  </div>
