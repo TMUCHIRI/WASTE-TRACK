@@ -44,11 +44,11 @@ export class userService {
       };
     }
   }
-  //method for fetching users and managers
+  //method for fetching users and collectors
   async fetchAllUsers(){
 
     let pool = await mssql.connect(sqlconfig)
-    let result = (await pool.query(`SELECT * FROM Users WHERE role IN ('user', 'manager')`)).recordset
+    let result = (await pool.query(`SELECT * FROM Users WHERE role IN ('user', 'collector')`)).recordset
     
     if(result.length == 0){
       return{
@@ -96,24 +96,27 @@ export class userService {
     }
   }
 
-  async updateUser( email: string, password: string){
+  async updateUser(email: string, password: string, profile_picture?: string) {
     let pool = await mssql.connect(sqlconfig);
     let user_password = bcrypt.hashSync(password, 6);
 
+    // Check if the email exists
     let emailExist = (
       await pool.request().query(`SELECT * FROM Users WHERE email = '${email}'`)
     ).recordset;
 
     if (lodash.isEmpty(emailExist)) {
       return {
-        error: "Email doesn't exists",
+        error: "Email doesn't exist",
       };
     } else {
+      // Update user details
       let result = (
         await pool
           .request()
           .input("email", emailExist[0].email)
           .input("password", user_password)
+          .input("profile_picture", profile_picture || null) // Pass the profile picture URL or null
           .execute("updateUser")
       ).rowsAffected;
 
@@ -123,15 +126,16 @@ export class userService {
         };
       } else {
         return {
-          message: "User password updated successfully",
+          message: "User details updated successfully",
           email,
           user_password,
+          profile_picture,
         };
       }
     }
   }
 
-  async switchManagerRole(user_id: string){
+  async switchCollectorRole(user_id: string){
     let response = await this.fetchSingleUser(user_id);
 
     if (response.user.user_id) {
@@ -140,11 +144,11 @@ export class userService {
         await pool
           .request()
           .input("user_id", mssql.VarChar, user_id)
-          .query(`UPDATE Users SET role = 'manager' WHERE user_id = '${user_id}'`)
+          .query(`UPDATE Users SET role = 'collector' WHERE user_id = '${user_id}'`)
       ).rowsAffected
       if (response[0] === 1) {
         return {
-          message: "User role updated to manager",
+          message: "User role updated to collector",
         };
         
       } else {

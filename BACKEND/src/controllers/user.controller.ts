@@ -43,14 +43,15 @@ export const getSingleUser = async (req: Request, res: Response): Promise<void> 
 export const updateUser = async(req: Request, res: Response): Promise<void> => {
   try {
     const email = req.params.email;
-    const { password } = req.body;
+    const { password, profile_picture  } = req.body;
 
     const user = {
       email: email,
       password,
+      profile_picture,
     };
 
-    const response = await userServiceInstance.updateUser(email, password);
+    const response = await userServiceInstance.updateUser(email, password, profile_picture);
     res.status(201).json(response);
   } catch (error) {
     res.json({
@@ -62,11 +63,11 @@ export const updateUser = async(req: Request, res: Response): Promise<void> => {
 export const switchRoleToManager = async(req: Request, res:Response): Promise<void> => {
   try {
     const { user_id} = req.params;
-    const response =  await userServiceInstance.switchManagerRole(user_id);
+    const response =  await userServiceInstance.switchCollectorRole(user_id);
 
     res.status(201).json(response);
   } catch (error){
-    res.status(500).json({error: 'Error switching role to manager'})
+    res.status(500).json({error: 'Error switching role to collector'})
   }
 }
 

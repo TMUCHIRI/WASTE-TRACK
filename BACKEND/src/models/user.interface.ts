@@ -3,6 +3,7 @@ export interface UserDetails{
     username: string,
     email: string,
     password: string,
+    profile_picture?: string
 }
 
 export interface login_details{

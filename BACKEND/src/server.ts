@@ -2,6 +2,8 @@ import express, { NextFunction, Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import user_router from './routers/user.router';
+import pickup_router from './routers/pickup.router';
+import collection_router from './routers/collection.router';
 
 const app = express();
 
@@ -23,6 +25,8 @@ app.use(express.json());
 
 // Routes
 app.use('/users', user_router);
+app.use('/pickups', pickup_router);
+app.use('/collections', collection_router);
 
 // Error Handling
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {

@@ -3,9 +3,9 @@ POST http://localhost:5800/users/register
 Content-Type: application/json
 
 {
-    "username": "USER",
-    "email": "user@example.com",
-    "password": "user1"
+    "username": "Collector",
+    "email": "collector@example.com",
+    "password": "collector"
 }
 
 ###LOGIN USER
@@ -17,13 +17,13 @@ Content-Type: application/json
     "password": "1234567"
 }
 
-###FETCH ALL USERS AND MANAGERS
+###FETCH ALL USERS AND COLLECTORS
 GET http://localhost:5800/users/fetch-all-users
 Content-Type: application/json
 
 
 ### FETCH SINGLE USER
-GET http://localhost:5800/users/cf2be7dd-4549-40ba-a1af-342c85d0698d
+GET http://localhost:5800/users/7d02a16b-70fd-417d-828d-4a6701dde7e7
 Content-Type: application/json
 
 
@@ -32,22 +32,23 @@ GET http://localhost:5800/users/fetchRole-users
 Content-Type: application/json
 
 
-###UPDATE USER PASSWORD
+###UPDATE USER PROFILE
 PUT http://localhost:5800/users/admintim@example.com
 Content-Type: application/json
 
 {
-  "password": "1234567"
+  "password": "1234567",
+  "profile_picture": "picture.jpg"
 }
 
 
-###SWITCH TO MANAGER ROLE
-PUT http://localhost:5800/users/switchManagerRole/cf2be7dd-4549-40ba-a1af-342c85d0698d
+###SWITCH TO COLLECTOR ROLE
+PUT http://localhost:5800/users/switchManagerRole/c640d40b-0018-4ddd-8e80-ec0e930c5916
 Content-Type: application/json
 
 
 ###SWITCH TO ADMIN ROLE
-PUT http://localhost:5800/users/switchAdminRole/7d02a16b-70fd-417d-828d-4a6701dde7e7
+PUT http://localhost:5800/users/switchAdminRole/451abb08-e19c-4af2-990e-1ed0fe186862
 Content-Type: application/json
 
 

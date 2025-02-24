@@ -14,6 +14,9 @@ import { AdminDashboardComponent } from './components/admin/admin-dashboard/admi
 import { AdminRequestsComponent } from './components/admin/admin-requests/admin-requests.component';
 import { AdminUsersComponent } from './components/admin/admin-users/admin-users.component';
 import { AdminProfileComponent } from './components/admin/admin-profile/admin-profile.component';
+import { UserHistoryComponent } from './components/users/user-history/user-history.component';
+
+
 
 export const routes: Routes = [
     {path: '',component: LandingComponent},
@@ -22,7 +25,8 @@ export const routes: Routes = [
     {path: 'users', component: UsersComponent,
         children: [
             {path: 'user-dashboard', component: UserDashboardComponent},
-            {path: 'user-profile', component: UserProfileComponent}
+            {path: 'user-profile', component: UserProfileComponent},
+            {path: 'user-history', component: UserHistoryComponent}
         ]
     },
 

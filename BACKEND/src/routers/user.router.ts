@@ -5,6 +5,8 @@ import { getUsers } from '../controllers/user.controller';
 import { getSingleUser } from '../controllers/user.controller';
 import { loginUser } from '../controllers/auth.controller';
 import { updateUser } from '../controllers/user.controller';
+
+
 const user_router = express.Router();
 
 user_router.post('/register', registerUser);

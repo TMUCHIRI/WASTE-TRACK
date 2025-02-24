@@ -1,0 +1,48 @@
+###ACCEPT PICKUP
+POST http://localhost:5800/collections/accept-pickup
+Content-Type: application/json
+
+{
+    "user_id": "c640d40b-0018-4ddd-8e80-ec0e930c5916",
+    "pickup_id": "dcdcea8a-42ff-439f-8d0d-d806d87ed064"
+}
+
+
+###REJECT PICKUP
+POST http://localhost:5800/collections/reject-pickup
+Content-Type: application/json
+
+{
+    "collection_id": "a778748c-5376-46d3-ac67-6a384238ac86",
+    "pickup_id": "dcdcea8a-42ff-439f-8d0d-d806d87ed064"
+}
+
+
+###GET ALL ACCEPTED PICKUPS
+GET http://localhost:5800/collections/get-all-accepted-pickups
+Content-Type: application/json
+
+
+###GET SINGLE ACCEPTED PICKUP
+GET http://localhost:5800/collections/get-single-accepted-pickup/a778748c-5376-46d3-ac67-6a384238ac86
+Content-Type: application/json
+
+
+###GET ALL PENDING PICKUPS
+GET http://localhost:5800/collections/get-all-pending-pickups
+Content-Type: application/json
+
+
+###GET SINGLE PENDING PICKUP
+GET http://localhost:5800/collections/get-single-pending-pickup/0ddd77a3-6d16-4793-b022-d464a3ba4f12
+Content-Type: application/json
+
+
+###GET ALL CANCELLED PICKUPS
+GET http://localhost:5800/collections/get-all-cancelled-pickups
+Content-Type: application/json
+
+
+###GET SINGLE CANCELLED PICKUP
+GET http://localhost:5800/collections/get-single-cancelled-pickup/a778748c-5376-46d3-ac67-6a384238ac86
+Content-Type: application/json

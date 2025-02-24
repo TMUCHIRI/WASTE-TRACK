@@ -1,0 +1,36 @@
+###CREATE PICKUP
+POST http://localhost:5800/pickups/createPickup
+Content-Type: application/json
+
+{
+    "location": "Chuka",
+    "date": "22-02-2025",
+    "phone_number": "0712345678",
+    "category": "Waste collection"
+}
+
+###GET SINGLE PICKUP
+GET http://localhost:5800/pickups/fetch-single-pickup/0ddd77a3-6d16-4793-b022-d464a3ba4f12
+Content-Type: application/json
+
+
+###GET ALL PICKUPS
+GET http://localhost:5800/pickups/fetch-all-pickups
+Content-Type: application/json
+
+
+###UPDATE PICKUP
+PUT http://localhost:5800/pickups/update-pickup/0ddd77a3-6d16-4793-b022-d464a3ba4f12
+Content-Type: application/json
+
+{
+    "location": "Ndagani",
+    "date": "27-02-2025",
+    "phone_number": "0712345678",
+    "category": "Recyclable goods"
+}
+
+
+###DELETE PICKUP
+DELETE http://localhost:5800/pickups/delete-pickup/dcb035cd-93d1-4814-bb12-e79019fbe4c1
+Content-Type: application/json
