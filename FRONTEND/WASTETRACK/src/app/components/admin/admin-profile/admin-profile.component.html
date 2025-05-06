@@ -1,85 +1,87 @@
 <div class="main">
     <div class="top">
-        <div class="header-text">
-            <h2>Admin Profile</h2>
-        </div>
+      <div class="header-text">
+        <h2>Admin Profile</h2>
+      </div>
     </div>
-
+  
     <div class="body">
-        <div class="left-side">
-            <div class="user-details">
-                <p><strong>Username:</strong> collector_username</p>
-                <p><strong>Email:</strong> collector{{'@'}}example.com</p>
-            </div>
-
-            <div class="user-actions">
-                <button (click)="openUpdateForm()">Update Profile</button>
-                <button (click)="openDisableModal()">Disable Account</button>
-                <button (click)="openRoleChangeModal()">Request Role Change</button>
-            </div>
+      <div class="left-side">
+        <div class="user-details">
+          <p><strong>Username:</strong> {{ username || 'Loading...' }}</p>
+          <p><strong>Email:</strong> {{ email || 'Loading...' }}</p>
         </div>
-
-        <div class="right-side">
-            <div class="user-profile-img">
-                <img src="../asset/_fhdanimals196.jpg" alt="Profile Picture">
-            </div>
+  
+        <div class="user-actions">
+          <button (click)="openUpdateForm()">Update Profile</button>
+          <button (click)="openDisableModal()">Disable Account</button>
         </div>
+        <div *ngIf="successMessage" class="validation-success">{{ successMessage }}</div>
+        <div *ngIf="errorMessage" class="validation-error">{{ errorMessage }}</div>
+      </div>
+  
+      <div class="right-side">
+        <div class="user-profile-img">
+          <img src="../asset/_fhdanimals196.jpg" alt="Profile Picture">
+        </div>
+      </div>
     </div>
-
+  
     <!-- Update Profile Form Modal -->
     <div class="form-modal" *ngIf="isUpdateFormOpen">
-        <div class="form-content">
-            <span class="close-btn" (click)="closeUpdateForm()">&times;</span>
-            <h2>Update Profile</h2>
-            <form #updateForm="ngForm" (ngSubmit)="onUpdateSubmit(updateForm)">
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" ngModel required email #email="ngModel">
-                    <div *ngIf="email.invalid && (email.dirty || email.touched)" class="validation-error">
-                        <div *ngIf="email.errors?.['required']">Email is required.</div>
-                        <div *ngIf="email.errors?.['email']">Please enter a valid email.</div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name="password" ngModel required minlength="6" #password="ngModel">
-                    <div *ngIf="password.invalid && (password.dirty || password.touched)" class="validation-error">
-                        <div *ngIf="password.errors?.['required']">Password is required.</div>
-                        <div *ngIf="password.errors?.['minlength']">Password must be at least 6 characters.</div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <button type="submit" [disabled]="updateForm.invalid">Submit</button>
-                </div>
-            </form>
-        </div>
+      <div class="form-content">
+        <span class="close-btn" (click)="closeUpdateForm()">×</span>
+        <h2>Update Profile</h2>
+        <form #updateForm="ngForm" (ngSubmit)="onUpdateSubmit(updateForm)">
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input 
+              type="email" 
+              id="email" 
+              name="email" 
+              [(ngModel)]="email" 
+              required 
+              email 
+              #emailInput="ngModel">
+            <div *ngIf="emailInput.invalid && (emailInput.dirty || emailInput.touched)" class="validation-error">
+              <div *ngIf="emailInput.errors?.['required']">Email is required.</div>
+              <div *ngIf="emailInput.errors?.['email']">Please enter a valid email.</div>
+            </div>
+          </div>
+  
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input 
+              type="password" 
+              id="password" 
+              name="password" 
+              ngModel 
+              required 
+              minlength="6" 
+              #password="ngModel">
+            <div *ngIf="password.invalid && (password.dirty || password.touched)" class="validation-error">
+              <div *ngIf="password.errors?.['required']">Password is required.</div>
+              <div *ngIf="password.errors?.['minlength']">Password must be at least 6 characters.</div>
+            </div>
+          </div>
+  
+          <div class="form-group">
+            <button type="submit" [disabled]="updateForm.invalid">Submit</button>
+          </div>
+        </form>
+      </div>
     </div>
-
+  
     <!-- Disable Account Modal -->
     <div class="form-modal" *ngIf="isDisableModalOpen">
-        <div class="form-content">
-            <span class="close-btn" (click)="closeDisableModal()">&times;</span>
-            <h2>Disable Account</h2>
-            <p>Are you sure you want to disable your account?</p>
-            <div class="modal-actions">
-                <button (click)="disableAccount()">Proceed</button>
-                <button (click)="closeDisableModal()">Cancel</button>
-            </div>
+      <div class="form-content">
+        <span class="close-btn" (click)="closeDisableModal()">×</span>
+        <h2>Disable Account</h2>
+        <p>Are you sure you want to disable your account?</p>
+        <div class="modal-actions">
+          <button (click)="disableAccount()">Proceed</button>
+          <button (click)="closeDisableModal()">Cancel</button>
         </div>
+      </div>
     </div>
-
-    <!-- Role Change Request Modal -->
-    <div class="form-modal" *ngIf="isRoleChangeModalOpen">
-        <div class="form-content">
-            <span class="close-btn" (click)="closeRoleChangeModal()">&times;</span>
-            <h2>Request Role Change</h2>
-            <p>Are you sure you want to request to change your role back to a user? This request will be sent to the admin for approval.</p>
-            <div class="modal-actions">
-                <button (click)="sendRoleChangeRequest()">Confirm</button>
-                <button (click)="closeRoleChangeModal()">Cancel</button>
-            </div>
-        </div>
-    </div>
-</div>
+  </div>

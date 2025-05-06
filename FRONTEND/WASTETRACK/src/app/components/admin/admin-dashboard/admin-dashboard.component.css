@@ -137,6 +137,11 @@ body {
     color: #555;
 }
 
+.validation-error {
+    color: red;
+    margin-top: 10px;
+    text-align: center;
+  }
 /* Responsive Design */
 @media (max-width: 768px) {
     .body {

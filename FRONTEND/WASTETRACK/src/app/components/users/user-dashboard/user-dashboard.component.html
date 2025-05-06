@@ -1,3 +1,4 @@
+<!-- user-dashboard.component.html -->
 <div class="main">
   <div class="top">
     <div class="header">
@@ -15,7 +16,7 @@
 
   <div class="body">
     <div class="table-header">
-      <h2>Active Pickups</h2>
+      <h2>All Pickups</h2>
     </div>
     <div class="table">
       <table>
@@ -29,19 +30,28 @@
           </tr>
         </thead>
         <tbody>
-          <!-- Table rows will be dynamically added here -->
+          <tr *ngFor="let pickup of pickups">
+            <td>{{ pickup.pickup_id }}</td>
+            <td>{{ pickup.pickup_date }}</td>
+            <td>{{ pickup.collector || 'Not Assigned' }}</td>
+            <td>{{ pickup.category }}</td>
+            <td>{{ pickup.status }}</td>
+          </tr>
+          <tr *ngIf="pickups.length === 0">
+            <td colspan="5">No pickups found.</td>
+          </tr>
         </tbody>
       </table>
     </div>
+    <div *ngIf="errorMessage" class="validation-error">{{ errorMessage }}</div>
   </div>
 
-  <!-- Form Modal -->
+  <!-- Form Modal (unchanged) -->
   <div class="form-modal" *ngIf="isFormOpen">
     <div class="form-content">
-      <span class="close-btn" (click)="closeForm()">&times;</span>
+      <span class="close-btn" (click)="closeForm()">×</span>
       <h2>Request Pickup</h2>
       <form #pickupForm="ngForm" (ngSubmit)="onSubmit(pickupForm)">
-        <!-- Date Field -->
         <div class="form-group">
           <label for="date">Pickup Date</label>
           <input type="date" id="date" name="date" ngModel required #date="ngModel">
@@ -50,7 +60,6 @@
           </div>
         </div>
 
-        <!-- Location Field -->
         <div class="form-group">
           <label for="location">Location</label>
           <input type="text" id="location" name="location" ngModel required #location="ngModel">
@@ -59,7 +68,6 @@
           </div>
         </div>
 
-        <!-- Phone Number Field -->
         <div class="form-group">
           <label for="phone">Phone Number</label>
           <input type="tel" id="phone" name="phone" ngModel required pattern="[0-9]{10}" #phone="ngModel">
@@ -69,7 +77,6 @@
           </div>
         </div>
 
-        <!-- Category Field -->
         <div class="form-group">
           <label for="category">Category</label>
           <select id="category" name="category" ngModel required #category="ngModel">
@@ -83,10 +90,11 @@
           </div>
         </div>
 
-        <!-- Submit Button -->
         <div class="form-group">
           <button type="submit" [disabled]="pickupForm.invalid">Submit</button>
         </div>
+        <div *ngIf="successMessage" class="validation-success">{{ successMessage }}</div>
+        <div *ngIf="errorMessage" class="validation-error">{{ errorMessage }}</div>
       </form>
     </div>
   </div>

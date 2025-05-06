@@ -1,29 +1,33 @@
 <div class="main">
-    <div class="body">
-      <div class="table-header">
-        <h2>Pickup History</h2>
-      </div>
-      <div class="table">
-        <table>
-          <thead>
-            <tr>
-              <th>Pickup ID</th>
-              <th>Pickup Date</th>
-              <th>Collector</th>
-              <th>Category</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let pickup of pickups">
-              <td>{{ pickup.id }}</td>
-              <td>{{ pickup.date }}</td>
-              <td>{{ pickup.collector }}</td>
-              <td>{{ pickup.category }}</td>
-              <td>{{ pickup.status }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+  <div class="body">
+    <div class="table-header">
+      <h2>Pickup History</h2>
     </div>
+    <div class="table">
+      <table>
+        <thead>
+          <tr>
+            <th>Pickup ID</th>
+            <th>Pickup Date</th>
+            <th>Collector</th>
+            <th>Category</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let pickup of pickups">
+            <td>{{ pickup.id }}</td>
+            <td>{{ pickup.date | date:'dd-MM-yyyy' }}</td>
+            <td>{{ pickup.collector }}</td>
+            <td>{{ pickup.category }}</td>
+            <td>{{ pickup.status }}</td>
+          </tr>
+          <tr *ngIf="pickups.length === 0">
+            <td colspan="5">No completed pickups found.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="errorMessage" class="validation-error">{{ errorMessage }}</div>
   </div>
+</div>

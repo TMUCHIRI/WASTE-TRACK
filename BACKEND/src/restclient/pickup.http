@@ -19,6 +19,15 @@ GET http://localhost:5800/pickups/fetch-all-pickups
 Content-Type: application/json
 
 
+###GET ACTIVE PICKUPS
+GET http://localhost:5800/pickups/active/b66eee12-9adf-4de1-8058-e4ad9806d895
+Content-Type: application/json
+
+###GET PICKUP HISTORY
+GET http://localhost:5800/pickups/history/b66eee12-9adf-4de1-8058-e4ad9806d895
+Content-Type: application/json
+
+
 ###UPDATE PICKUP
 PUT http://localhost:5800/pickups/update-pickup/0ddd77a3-6d16-4793-b022-d464a3ba4f12
 Content-Type: application/json

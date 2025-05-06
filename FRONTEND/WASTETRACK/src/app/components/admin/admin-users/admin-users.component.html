@@ -1,45 +1,43 @@
 <div class="main">
     <div class="container">
-        <div class="top">
-            <div class="header-text">
-                <h1>Users Management</h1>
-            </div>
+      <div class="top">
+        <div class="header-text">
+          <h1>Users Management</h1>
         </div>
-
-        <div class="body">
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Role</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Sample Data (Replace with dynamic data) -->
-                        <tr>
-                            <td>John Doe</td>
-                            <td>johndoe{{'@'}}example.com</td>
-                            <td>Collector</td>
-                            <td>
-                                <button class="edit-btn">Activate</button>
-                                <button class="delete-btn">Deactivate</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Jane Smith</td>
-                            <td>janesmith{{'@'}}example.com</td>
-                            <td>User</td>
-                            <td>
-                                <button class="edit-btn">Activate</button>
-                                <button class="delete-btn">Deactivate</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+      </div>
+  
+      <div class="body">
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let user of filteredUsers">
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.role }}</td>
+                <td>
+                  <button 
+                    [ngClass]="user.role === 'user' ? 'make-collector-btn' : 'revert-user-btn'" 
+                    (click)="toggleUserRole(user)">
+                    {{ user.role === 'user' ? 'Make Collector' : 'Revert to User' }}
+                  </button>
+                </td>
+              </tr>
+              <tr *ngIf="filteredUsers.length === 0">
+                <td colspan="4">No users found.</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
+        <div *ngIf="errorMessage" class="validation-error">{{ errorMessage }}</div>
+        <div *ngIf="successMessage" class="validation-success">{{ successMessage }}</div>
+      </div>
     </div>
-</div>
+  </div>

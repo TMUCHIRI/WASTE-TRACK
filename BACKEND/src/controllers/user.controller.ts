@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { userService } from "../services/user.service";
+import { verifyToken, restrictTo } from "../middleware/auth.middleware";
 
 const userServiceInstance = new userService();
 

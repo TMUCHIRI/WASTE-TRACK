@@ -1,45 +1,38 @@
 <div class="main">
-    <div class="container">
-      <div class="top">
-        <div class="header-text">
-          <h1>Request History</h1>
-        </div>
-      </div>
-  
-      <div class="body">
-        <div class="table">
-          <table>
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Category</th>
-                <th>Location</th>
-              </tr>
-            </thead>
-            <tbody>
-              <!-- Table rows will be dynamically added here -->
-              <tr>
-                <td>John Doe</td>
-                <td>john.doe{{'@'}}example.com</td>
-                <td>Garbage Collection</td>
-                <td>Nairobi</td>
-              </tr>
-              <tr>
-                <td>Jane Smith</td>
-                <td>jane.smith{{'@'}}example.com</td>
-                <td>Recyclable Products</td>
-                <td>Mombasa</td>
-              </tr>
-              <tr>
-                <td>Alice Johnson</td>
-                <td>alice.johnson{{'@'}}example.com</td>
-                <td>Sanitary Disposal</td>
-                <td>Kisumu</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+  <div class="container">
+    <div class="top">
+      <div class="header-text">
+        <h1>Request History</h1>
       </div>
     </div>
+
+    <div class="body">
+      <div class="table">
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Category</th>
+              <th>Location</th>
+              <th>Date</th> <!-- Added Date column -->
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let collection of collections">
+              <td>{{ collection.username }}</td>
+              <td>{{ collection.email }}</td>
+              <td>{{ collection.category }}</td>
+              <td>{{ collection.location }}</td>
+              <td>{{ collection.pickup_date }}</td> <!-- Display pickup_date -->
+            </tr>
+            <tr *ngIf="collections.length === 0">
+              <td colspan="5">No collection history found.</td> <!-- Updated colspan to 5 -->
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div *ngIf="errorMessage" class="validation-error">{{ errorMessage }}</div>
+    </div>
   </div>
+</div>

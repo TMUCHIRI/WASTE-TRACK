@@ -1,67 +1,72 @@
-  ###REGISTER USER
-POST http://localhost:5800/users/register
+# Base URL
+@baseUrl = http://localhost:5800/users
+@adminToken = {{loginAdmin.response.body.token}}
+
+### REGISTER ADMIN USER (Public - No Authorization Needed)
+POST {{baseUrl}}/register
 Content-Type: application/json
 
 {
-    "username": "Collector",
-    "email": "collector@example.com",
-    "password": "collector"
-}
+  "username":"Timo",
+  "email":"timo@example.com",
+  "password":"1234567"
+  }
 
-###LOGIN USER
-POST http://localhost:5800/users/login
+### LOGIN ADMIN USER
+# @name loginAdmin
+POST {{baseUrl}}/login
 Content-Type: application/json
 
 {
-    "email": "user@example.com",
-    "password": "1234567"
+  "email":"collector@example.com",
+  "password":"collector"
 }
 
-###FETCH ALL USERS AND COLLECTORS
-GET http://localhost:5800/users/fetch-all-users
+### FETCH ALL USERS AND COLLECTORS (Admin Only)
+GET {{baseUrl}}/fetch-all-users
 Content-Type: application/json
 
 
-### FETCH SINGLE USER
-GET http://localhost:5800/users/7d02a16b-70fd-417d-828d-4a6701dde7e7
+### FETCH USER BY ROLE(USER) (Collector or Admin)
+GET {{baseUrl}}/fetchRole-users
 Content-Type: application/json
 
 
-### FETCH USER BY ROLE(USER)
-GET http://localhost:5800/users/fetchRole-users
+### FETCH SINGLE USER (Any Authenticated User)
+GET {{baseUrl}}/64b0cf59-afcd-48c9-badc-64b00eb6821f
 Content-Type: application/json
 
 
-###UPDATE USER PROFILE
-PUT http://localhost:5800/users/admintim@example.com
+### UPDATE USER PROFILE (Any Authenticated User)
+PUT {{baseUrl}}/admintim@example.com
 Content-Type: application/json
+
 
 {
-  "password": "1234567",
-  "profile_picture": "picture.jpg"
+  "password":"1234567",
+  "profile_picture":"picture.jpg"
 }
 
-
-###SWITCH TO COLLECTOR ROLE
-PUT http://localhost:5800/users/switchManagerRole/c640d40b-0018-4ddd-8e80-ec0e930c5916
+### SWITCH TO COLLECTOR ROLE (Admin Only)
+PATCH {{baseUrl}}/switchManagerRole/64b0cf59-afcd-48c9-badc-64b00eb6821f
 Content-Type: application/json
 
 
-###SWITCH TO ADMIN ROLE
-PUT http://localhost:5800/users/switchAdminRole/451abb08-e19c-4af2-990e-1ed0fe186862
+### SWITCH TO ADMIN ROLE (Admin Only)
+PATCH {{baseUrl}}/switchAdminRole/64b0cf59-afcd-48c9-badc-64b00eb6821f
 Content-Type: application/json
 
 
-###REVOKE PRIVILEGES FROM MANAGER AND ADMIN ROLE TO USERS
-PUT http://localhost:5800/users/revokePrivileges/7d02a16b-70fd-417d-828d-4a6701dde7e7
+### REVOKE PRIVILEGES FROM MANAGER AND ADMIN ROLE TO USERS (Admin Only)
+PATCH {{baseUrl}}/revokePrivileges/7d02a16b-70fd-417d-828d-4a6701dde7e7
 Content-Type: application/json
 
 
-###DEACTIVATE USER
-PUT http://localhost:5800/users/deactivateUser/7d02a16b-70fd-417d-828d-4a6701dde7e7
+### DEACTIVATE USER (Admin Only)
+PATCH {{baseUrl}}/deactivateUser/029f5ee7-8439-4337-9847-b9d862f14757
 Content-Type: application/json
 
 
-###ACTIVATE USER
-PUT http://localhost:5800/users/activateUser/7d02a16b-70fd-417d-828d-4a6701dde7e7
+### ACTIVATE USER (Admin Only)
+PATCH {{baseUrl}}/activateUser/029f5ee7-8439-4337-9847-b9d862f14757
 Content-Type: application/json

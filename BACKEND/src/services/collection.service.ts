@@ -90,6 +90,16 @@ export class collectionService {
     }
   }
 
+  async getCollectorCollections(user_id: string) {
+    const pool = await mssql.connect(sqlconfig);
+    const result = await pool
+      .request()
+      .input('user_id', mssql.VarChar, user_id)
+      .execute('getCollectorCollections');
+    
+    return result.recordset;
+  }
+
   // View a single accepted pickup
   async getSingleAcceptedPickup(collection_id: string) {
     try {
@@ -208,5 +218,32 @@ export class collectionService {
       console.error("Error fetching canceled pickup:", error);
       throw error;
     }
+  }
+
+  async getCollectorAnalytics(user_id: string) {
+    const pool = await mssql.connect(sqlconfig);
+    const result = await pool
+      .request()
+      .input('user_id', mssql.VarChar, user_id)
+      .execute('getCollectorAnalytics');
+    
+    const recordset = result.recordset;
+    if (recordset.length === 0) {
+      return {
+        pending_requests: 0,
+        completed_requests: 0,
+        category_stats: []
+      };
+    }
+
+    const analytics = {
+      pending_requests: recordset[0].pending_requests,
+      completed_requests: recordset[0].completed_requests,
+      category_stats: recordset.map(row => ({
+        category: row.category,
+        count: row.category_count
+      }))
+    };
+    return analytics;
   }
 }

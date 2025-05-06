@@ -1,28 +1,41 @@
 <div class="main">
-    <div class="container">
-      <div class="top">
-        <div class="header-text">
-          <h1>Pending Requests</h1>
-        </div>
-      </div>
-  
-      <div class="body">
-        <div class="table">
-          <table>
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Phone Number</th>
-                <th>Category</th>
-                <th>Location</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <!-- Table rows will be dynamically added here -->
-            </tbody>
-          </table>
-        </div>
+  <div class="container">
+    <div class="top">
+      <div class="header-text">
+        <h1>Pending Requests</h1>
       </div>
     </div>
+
+    <div class="body">
+      <div class="table">
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Phone Number</th>
+              <th>Category</th>
+              <th>Location</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let pickup of pickups">
+              <td>{{ pickup.user_id }}</td> <!-- Still using user_id; consider fetching username -->
+              <td>{{ pickup.phone_number }}</td>
+              <td>{{ pickup.category }}</td>
+              <td>{{ pickup.location }}</td>
+              <td>
+                <button (click)="acceptPickup(pickup.pickup_id)">Accept</button>
+              </td>
+            </tr>
+            <tr *ngIf="pickups.length === 0">
+              <td colspan="5">No pending pickup requests found.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div *ngIf="successMessage" class="validation-success">{{ successMessage }}</div>
+      <div *ngIf="errorMessage" class="validation-error">{{ errorMessage }}</div>
+    </div>
   </div>
+</div>

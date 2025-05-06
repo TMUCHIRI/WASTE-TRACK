@@ -20,6 +20,8 @@
         <div *ngIf="password.errors?.['required']">Password is required.</div>
       </div>
 
+      <div *ngIf="loginError" class="validation-error">{{ loginError }}</div>
+
       <p class="forgot-pass">Forgot password?</p>
       <button type="submit" class="submit" [disabled]="loginForm.invalid">Sign In</button>
     </form>
@@ -67,6 +69,9 @@
           <div *ngIf="regPassword.errors?.['required']">Password is required.</div>
           <div *ngIf="regPassword.errors?.['minlength']">Password must be at least 6 characters.</div>
         </div>
+
+        <div *ngIf="registerError" class="validation-error">{{ registerError }}</div>
+        <div *ngIf="registerSuccess" class="validation-success">{{ registerSuccess }}</div>
 
         <button type="submit" class="submit" [disabled]="registerForm.invalid">Sign Up</button>
       </form>

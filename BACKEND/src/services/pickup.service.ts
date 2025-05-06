@@ -5,35 +5,30 @@ import { v4 } from 'uuid';
 import { sqlconfig } from "../config/sql.config";
 
 export class pickupService{
-    async createPickup(pickup: Pickup){
-        const pool = await mssql.connect(sqlconfig);
+  async createPickup(pickup: Pickup & { user_id: string }) {
+    const pool = await mssql.connect(sqlconfig);
+    const pickup_id = v4();
+    const formattedDate = DateTime.fromFormat(pickup.date, "dd-MM-yyyy").toFormat("yyyy-MM-dd HH:mm:ss");
 
-        const pickup_id = v4(); // Generate a unique pickup ID
-        const formattedDate = DateTime.fromFormat(pickup.date, "dd-MM-yyyy")
-      .toFormat("yyyy-MM-dd HH:mm:ss");
-  
-        const result = (
-          await pool
-            .request()
-            .input("pickup_id", mssql.VarChar, pickup_id)
-            .input("location", mssql.VarChar, pickup.location)
-            .input("date", mssql.DateTime, formattedDate)
-            .input("phone_number", mssql.VarChar, pickup.phone_number)
-            .input("category", mssql.VarChar, pickup.category)
-            .execute("createPickup")
-        ).rowsAffected;
-  
-        if (result[0] === 1) {
-          return {
-            message: "Pickup created successfully",
-            pickup_id,
-          };
-        } else {
-          return {
-            error: "Failed to create pickup",
-          };
-        }
+    const result = (
+      await pool
+        .request()
+        .input("pickup_id", mssql.VarChar, pickup_id)
+        .input("location", mssql.VarChar, pickup.location)
+        .input("date", mssql.DateTime, formattedDate)
+        .input("phone_number", mssql.VarChar, pickup.phone_number)
+        .input("category", mssql.VarChar, pickup.category)
+        .input("user_id", mssql.VarChar, pickup.user_id) // Add user_id
+        .input("status", mssql.Bit, 1) // Default to active
+        .execute("createPickup")
+    ).rowsAffected;
+
+    if (result[0] === 1) {
+      return { message: "Pickup created successfully", pickup_id };
+    } else {
+      return { error: "Failed to create pickup" };
     }
+  }
 
     async displaySinglePickup(pickup_id: string){
         const pool = await mssql.connect(sqlconfig);
@@ -56,23 +51,32 @@ export class pickupService{
         }
     }
 
-    async displayAllPickups(){
-        const pool = await mssql.connect(sqlconfig);
+    // pickup.service.ts (Backend)
+async getActivePickups(userId: string) {
+  const pool = await mssql.connect(sqlconfig);
+  try {
+    const result = await pool.request()
+      .input('user_id', mssql.VarChar, userId)
+      .execute('getActivePickups');
+    return { pickups: result.recordset }; // Still returns { pickups: [...] }, fixed in controller
+  } finally {
+    pool.close();
+  }
+}
 
-        const pickups = (
-          await pool.query("SELECT * FROM Pickup")
-        ).recordset;
-  
-        if (pickups.length > 0) {
-          return {
-            pickups,
-          };
-        } else {
-          return {
-            message: "No pickups found",
-          pickups: [],
-          };
-        }
+    async displayAllPickups(){
+      const pool = await mssql.connect(sqlconfig);
+      try {
+        const result = await pool.request().query(`
+          SELECT p.* 
+          FROM Pickup p
+          LEFT JOIN Collections c ON p.pickup_id = c.pickup_id
+          WHERE p.status = 1 AND c.pickup_id IS NULL
+        `);
+        return { pickups: result };
+      } finally {
+        pool.close();
+      }
     }
 
     async updatePickup(pickup: Pickup){
@@ -101,6 +105,18 @@ export class pickupService{
             error: "Failed to update pickup",
           };
         } 
+    }
+
+    async getUserPickupHistory(userId: string) {
+      const pool = await mssql.connect(sqlconfig);
+      try {
+        const result = await pool.request()
+          .input('userId', mssql.VarChar, userId)
+          .execute('getUserPickupHistory');
+        return { pickups: result.recordset };
+      } finally {
+        pool.close();
+      }
     }
 
     async deletePickup(pickup_id: string){

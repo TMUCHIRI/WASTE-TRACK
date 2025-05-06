@@ -50,6 +50,20 @@ export const getAllAcceptedPickups = async (req: Request, res: Response): Promis
   }
 };
 
+export const getCollectorCollections = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { user_id } = req.params;
+    if (!user_id) {
+      res.status(400).json({ error: 'user_id is required' });
+      return;
+    }
+    const collections = await collectionServiceInstance.getCollectorCollections(user_id);
+    res.status(200).json({ collections });
+  } catch (error) {
+    res.status(500).json({ error: (error as Error).message });
+  }
+};
+
 // View a single accepted pickup
 export const getSingleAcceptedPickup = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -123,6 +137,20 @@ export const getSingleCanceledPickup = async (req: Request, res: Response): Prom
     } else {
       res.status(200).json(result); 
     }
+  } catch (error) {
+    res.status(500).json({ error: (error as Error).message });
+  }
+};
+
+export const getCollectorAnalytics = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { user_id } = req.params;
+    if (!user_id) {
+      res.status(400).json({ error: 'user_id is required' });
+      return;
+    }
+    const analytics = await collectionServiceInstance.getCollectorAnalytics(user_id);
+    res.status(200).json(analytics);
   } catch (error) {
     res.status(500).json({ error: (error as Error).message });
   }
